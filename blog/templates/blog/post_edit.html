@@ -1,174 +1,203 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/base.html' %} {% block content %}
+<div class="form-wrapper">
+  <div class="post-form-container">
+    <h2>
+      {% if post %}Editar Publicación{% else %}Crear Nueva Publicación{% endif%}
+    </h2>
 
-{% block content %}
-    <div class="post-form-container">
-        <h2>{% if post %}Editar Publicación{% else %}Crear Nueva Publicación{% endif %}</h2>
-        
-        <form method="POST" class="post-form">{% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.title.id_for_label }}" class="form-label">Título</label>
-                <input type="text" 
-                       name="title" 
-                       id="{{ form.title.id_for_label }}" 
-                       class="form-input" 
-                       placeholder="Escribe el título del post..."
-                       value="{{ form.title.value|default:'' }}"
-                       required>
-                {% if form.title.errors %}
-                    <div class="error-message">{{ form.title.errors }}</div>
-                {% endif %}
-            </div>
+    <form method="POST" class="post-form">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.title.id_for_label }}" class="form-label"
+          >Título</label
+        >
+        <input
+          type="text"
+          name="title"
+          id="{{ form.title.id_for_label }}"
+          class="form-input"
+          placeholder="Escribe el título del post..."
+          value="{{ form.title.value|default:'' }}"
+          required
+        />
+        {% if form.title.errors %}
+        <div class="error-message">{{ form.title.errors }}</div>
+        {% endif %}
+      </div>
 
-            <div class="form-group">
-                <label for="{{ form.text.id_for_label }}" class="form-label">Contenido</label>
-                <textarea name="text" 
-                          id="{{ form.text.id_for_label }}" 
-                          class="form-input form-textarea" 
-                          placeholder="Escribe el contenido del post aquí..."
-                          rows="10"
-                          required>{{ form.text.value|default:'' }}</textarea>
-                {% if form.text.errors %}
-                    <div class="error-message">{{ form.text.errors }}</div>
-                {% endif %}
-            </div>
+      <div class="form-group">
+        <label for="{{ form.text.id_for_label }}" class="form-label"
+          >Contenido</label
+        >
+        <textarea
+          name="text"
+          id="{{ form.text.id_for_label }}"
+          class="form-input form-textarea"
+          placeholder="Escribe el contenido del post aquí..."
+          rows="10"
+          required
+        >
+{{ form.text.value|default:'' }}</textarea
+        >
+        {% if form.text.errors %}
+        <div class="error-message">{{ form.text.errors }}</div>
+        {% endif %}
+      </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-save">
-                    {% if post %} Actualizar Post{% else %} Crear Post{% endif %}
-                </button>
-                <a href="/" class="btn btn-secondary">← Cancelar</a>
-            </div>
-        </form>
-    </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-save">
+          {% if post %} Actualizar Post{% else %} Crear Post{% endif %}
+        </button>
+        <a href="/" class="btn btn-secondary">← Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
 
-    <style>
-        .post-form-container {
-            max-width: 600px;
-            padding: 40px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+<style>
+  .form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 70vh;
+  }
 
-        .post-form-container h2 {
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 28px;
-        }
+  .post-form-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin: auto;
+  }
 
-        .post-form {
-            display: flex;
-            flex-direction: column;
-        }
+  .post-form-container h2 {
+    color: #0044c2;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-        .form-group {
-            margin-bottom: 25px;
-        }
+  .post-form {
+    display: flex;
+    flex-direction: column;
+  }
 
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 16px;
-        }
+  .form-group {
+    margin-bottom: 25px;
+  }
 
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+  }
 
-        .form-input:focus {
-            outline: none;
-            border-color: #0044c2;
-            box-shadow: 0 0 0 3px rgba(0, 68, 194, 0.1);
-            background-color: #f9f9f9;
-        }
+  .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+      Cantarell, sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
 
-        .form-textarea {
-            resize: vertical;
-            min-height: 250px;
-            line-height: 1.6;
-        }
+  .form-input:focus {
+    outline: none;
+    border-color: #0044c2;
+    box-shadow: 0 0 0 3px rgba(0, 68, 194, 0.1);
+    background-color: #f9f9f9;
+  }
 
-        .error-message {
-            color: #d9534f;
-            font-size: 14px;
-            margin-top: 5px;
-            padding: 8px;
-            background: #fee;
-            border-left: 3px solid #d9534f;
-            border-radius: 3px;
-        }
+  .form-textarea {
+    resize: vertical;
+    min-height: 250px;
+    line-height: 1.6;
+  }
 
-        .form-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 30px;
-        }
+  .error-message {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+    padding: 8px;
+    background: #fee;
+    border-left: 3px solid #d9534f;
+    border-radius: 3px;
+  }
 
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 30px;
+  }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #0044c2 0%, #003399 100%);
-            color: white;
-            box-shadow: 0 4px 6px rgba(0, 68, 194, 0.2);
-        }
+  .btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #003399 0%, #002266 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 68, 194, 0.3);
-        }
+  .btn-primary {
+    background: linear-gradient(135deg, #0044c2 0%, #003399 100%);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 68, 194, 0.2);
+  }
 
-        .btn-primary:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 68, 194, 0.2);
-        }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #003399 0%, #002266 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 68, 194, 0.3);
+  }
 
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            min-width: 120px;
-        }
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 68, 194, 0.2);
+  }
 
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
+  .btn-secondary {
+    background: #6c757d;
+    color: white;
+    min-width: 120px;
+  }
 
-        @media (max-width: 768px) {
-            .post-form-container {
-                padding: 20px;
-                margin: 15px;
-            }
+  .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+  }
 
-            .form-actions {
-                flex-direction: column;
-            }
+  @media (max-width: 768px) {
+    .form-wrapper {
+      padding: 10px;
+    }
 
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
+    .post-form-container {
+      padding: 20px;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
 {% endblock %}

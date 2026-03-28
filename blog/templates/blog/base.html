@@ -42,7 +42,6 @@
       }
       a {
         text-decoration: none !important;
-    
       }
 
       .date {
@@ -60,11 +59,12 @@
 
       .top-menu {
         color: #ffffff;
+        font-size: 18px;
         font-weight: bold;
         position: absolute;
-        top: 15px;
-        right: 20px;
-        padding: 10px;
+        top: 30px;
+        right: 30px;
+        padding: 18px 35px;
         background: #28a745;
         border-radius: 5px;
       }
@@ -93,9 +93,7 @@
     </div>
     <div class="content container">
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          {% block content %} {% endblock %}
-        </div>
+        <div class="col-md-8">{% block content %} {% endblock %}</div>
       </div>
     </div>
   </body>
