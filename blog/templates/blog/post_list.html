@@ -71,15 +71,156 @@
     {% extends 'blog/base.html' %}
 
     {% block content %}
-    {% for post in posts %}
-    <div class="post">
-        <div class="date">
-            {{ post.published_date }}
-        </div>
-        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+    
+    <div class="search-container">
+        <form method="GET" class="search-form">
+            <input type="text" 
+                   name="search" 
+                   placeholder=" Buscar posts..."
+                   value="{{ search_query }}"
+                   class="search-input">
+            <button type="submit" class="search-btn">Buscar</button>
+            {% if search_query %}
+                <a href="{% url 'post_list' %}" class="clear-search">Limpiar</a>
+            {% endif %}
+        </form>
+        <p class="search-info">
+            {% if search_query %}
+                <strong>Se encontraron {{ total_posts }} resultado(s)</strong> para "{{ search_query }}"
+            {% else %}
+                <strong>Total de posts:</strong> {{ total_posts }}
+            {% endif %}
+        </p>
     </div>
-    {% endfor %}
+
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date|date:"d/m/Y H:i" }}
+            </div>
+            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.text|truncatewords:50 }}</p>
+            <a href="{% url 'post_detail' pk=post.pk %}" class="read-more">Leer más →</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-posts">
+            <p> No se encontraron posts.</p>
+            {% if search_query %}
+                <p>Intenta con otras palabras clave.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    <style>
+        .search-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0044c2;
+            box-shadow: 0 0 5px rgba(0, 68, 194, 0.3);
+        }
+
+        .search-btn {
+            padding: 10px 20px;
+            background: #0044c2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #003399;
+        }
+
+        .clear-search {
+            padding: 10px 15px;
+            background: #6c757d;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .clear-search:hover {
+            background: #5a6268;
+        }
+
+        .search-info {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .read-more {
+            color: #0044c2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #003399;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 40px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        .no-posts p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .post h2 a {
+            color: #0044c2 !important;
+            text-decoration: none;
+        }
+
+        .post h2 a:hover {
+            color: #003399;
+            text-decoration: underline;
+        }
+    </style>
     {% endblock %}
 </body>
 

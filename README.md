@@ -182,7 +182,12 @@ O desde la interfaz web:
 - Página principal: `http://localhost:8000/`
 - Detalle de post: `http://localhost:8000/post/<id>/`
 
-### Editar una publicación
+### Buscar publicaciones
+
+1. En la página principal, usa el formulario **" Buscar posts..."**
+2. Escribe palabras clave (busca en títulos y contenido)
+3. Haz clic en **"Buscar"** 
+4. Usa **"Limpiar"** para volver a mostrar todos los posts
 
 1. Accede al detalle del post: `http://localhost:8000/post/<id>/`
 2. Haz clic en el botón **" Editar"**

@@ -4,10 +4,23 @@ from .models import Post
 from django.shortcuts import render, get_object_or_404 
 from .forms import PostForm
 from django.shortcuts import redirect
+from django.db.models import Q
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    search_query = request.GET.get('search', '')
+    
+    if search_query:
+        posts = posts.filter(
+            Q(title__icontains=search_query) | 
+            Q(text__icontains=search_query)
+        )
+    
+    return render(request, 'blog/post_list.html', {
+        'posts': posts,
+        'search_query': search_query,
+        'total_posts': posts.count()
+    })
 
 
 def post_detail(request, pk):
